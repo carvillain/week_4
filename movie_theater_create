@@ -1,0 +1,52 @@
+-- CREATE CUSTOMER
+CREATE TABLE customer(
+	customer_id SERIAL PRIMARY KEY,
+	first_name VARCHAR(100),
+	last_name VARCHAR(100),
+	age INTEGER,
+	billing_info VARCHAR(100)
+);
+
+-- CREATE MOVIE 
+CREATE TABLE movie(
+	film_id SERIAL PRIMARY KEY,
+	run_time INTEGER,
+	rating VARCHAR(100),
+	age_requirement INTEGER,
+	film_capacity INTEGER
+);
+
+-- CREATE TICKET
+CREATE TABLE ticket(
+	ticket_id SERIAL PRIMARY KEY,
+	seat VARCHAR(100),
+	film_id INTEGER NOT NULL,
+	FOREIGN KEY(film_id) REFERENCES movie(film_id)
+);
+
+-- Create Inventory
+CREATE TABLE inventory(
+	inventory_id SERIAL PRIMARY KEY,
+	upc NUMERIC(12,0),
+	item_amount INTEGER
+);
+
+-- CREATE CONCESSIONS
+CREATE TABLE concession(
+	item_id SERIAL PRIMARY KEY,
+	item_name VARCHAR(100),
+	item_price NUMERIC(5,2),
+	inventory_id INTEGER NOT NULL,
+	FOREIGN KEY(inventory_id) REFERENCES inventory(inventory_id)
+);
+
+-- CREATE ORDER_
+CREATE TABLE order_(
+	order_id SERIAL PRIMARY KEY,
+	sub_total NUMERIC(3,2),
+	total NUMERIC(4,2),
+	customer_id INTEGER NOT NULL,
+	inventory_id INTEGER NOT NULL,
+	FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+	FOREIGN KEY(inventory_id) REFERENCES inventory(inventory_id)
+);
